@@ -9,7 +9,7 @@ bool Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 		window = SDL_CreateWindow(title.c_str(), xpos, ypos, width, height, fullscreen);
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		m_bRunning = true;
-		SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255,255, 255);
 		m_pGameStateMachine = new GameStateMachine();
 		m_pGameStateMachine->changeState(MenuState::Instance());
 		return true;

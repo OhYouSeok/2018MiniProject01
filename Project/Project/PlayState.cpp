@@ -34,19 +34,23 @@ void PlayState::render()
 bool PlayState::onEnter()
 {
 	if (!TheTextureManager::Instance()->load("assets/Player.png",
-		"helicopter", TheGame::Instance()->getRenderer())) {
+		"Player", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/helicopter2.png",
-		"helicopter2", TheGame::Instance()->getRenderer())) {
+	if (!TheTextureManager::Instance()->load("assets/Enemy.png",
+		"Enemy", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+
 	GameObject* player = new Player(
-		new LoaderParams(500, 100, 100, 100, "helicopter"));
+		new LoaderParams(0, 0, 32, 32, "Player"));
 	GameObject* enemy = new Enemy(
-		new LoaderParams(100, 100, 128, 55, "helicopter2"));
+		new LoaderParams(100, 100, 64, 64, "Enemy"));
+	GameObject* enemy2 = new Enemy(
+		new LoaderParams(200, 200, 64, 64, "Enemy"));
 	m_gameObjects.push_back(player);
 	m_gameObjects.push_back(enemy);
+	m_gameObjects.push_back(enemy2);
 	std::cout << "entering PlayState\n";
 	return true;
 }
