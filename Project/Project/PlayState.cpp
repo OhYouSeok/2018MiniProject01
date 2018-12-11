@@ -2,6 +2,9 @@
 #include "Game.h"
 #include "PauseState.h"
 #include "GameOverState.h"
+#include "GameClearState.h"
+#include "AnimatedGraphic.h"
+#include <SDL_ttf.h>
 
 const std::string PlayState::s_playID = "PLAY";
 PlayState * PlayState::s_pInstance = 0;
@@ -16,23 +19,37 @@ void PlayState::update()
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
-	if (checkCollision(
-		dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
-		dynamic_cast<SDLGameObject*>(m_gameObjects[1])))
-	{
-		TheGame::Instance()->getStateMachine()->pushState(
-			new GameOverState());
+	for (int x = 1; x <= 10; x++) {
+		if (checkCollision(
+			dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
+			dynamic_cast<SDLGameObject*>(m_gameObjects[x])))
+		{
+			TheGame::Instance()->getStateMachine()->pushState(
+				new GameOverState());
+		}
+	}
+	a = 60;
+	b = a - ((SDL_GetTicks() - start) / 1000);
+	if (b <= 0) {
+		TheGame::Instance()->getStateMachine()->pushState(new GameClearState());
 	}
 }
+
 void PlayState::render()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
+	std::string leftTime = std::to_string(b);
+	if (!TheTextureManager::Instance()->loadTTF("assets/a.ttf", "Timer", leftTime, TheGame::Instance()->getRenderer()))
+	{
+	}
+	;	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
 	}
+	TheTextureManager::Instance()->drawTTF("Timer", 300, 0, 50, 50, TheGame::Instance()->getRenderer());
 }
 bool PlayState::onEnter()
 {
+	start = SDL_GetTicks();
 	if (!TheTextureManager::Instance()->load("assets/Player.png",
 		"Player", TheGame::Instance()->getRenderer())) {
 		return false;
@@ -41,16 +58,51 @@ bool PlayState::onEnter()
 		"Enemy", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
-
+	if (!TheTextureManager::Instance()->load("assets/UI.png",
+		"UI", TheGame::Instance()->getRenderer())) {
+		return false;
+	}
+	if (TTF_Init() != 0) {
+		std::cout, "TTF_Init";
+	}
 	GameObject* player = new Player(
-		new LoaderParams(0, 0, 32, 32, "Player"));
+		new LoaderParams(320, 240, 32, 32, "Player"));
 	GameObject* enemy = new Enemy(
-		new LoaderParams(100, 100, 64, 64, "Enemy"));
+		new LoaderParams(50, 50, 32, 32, "Enemy"));
 	GameObject* enemy2 = new Enemy(
-		new LoaderParams(200, 200, 64, 64, "Enemy"));
+		new LoaderParams(250, 50, 32, 32, "Enemy"));
+	GameObject* enemy3 = new Enemy(
+		new LoaderParams(450, 50, 32, 32, "Enemy"));
+	GameObject* enemy4 = new Enemy(
+		new LoaderParams(50, 50, 32, 32, "Enemy"));
+	GameObject* enemy5 = new Enemy(
+		new LoaderParams(50, 250, 32, 32, "Enemy"));
+	GameObject* enemy6 = new Enemy(
+		new LoaderParams(50, 450, 32, 32, "Enemy"));
+	GameObject* enemy7 = new Enemy(
+		new LoaderParams(450, 50, 32, 32, "Enemy"));
+	GameObject* enemy8 = new Enemy(
+		new LoaderParams(450, 250, 32, 32, "Enemy"));
+	GameObject* enemy9 = new Enemy(
+		new LoaderParams(450, 450, 32, 32, "Enemy"));
+	GameObject* enemy10 = new Enemy(
+		new LoaderParams(150, 450, 32, 32, "Enemy"));
+	GameObject* enemy11 = new Enemy(
+		new LoaderParams(350, 450, 32, 32, "Enemy"));
+	GameObject* UI = new AnimatedGraphic(
+		new LoaderParams(0, 0, 640, 40, "UI"),2);
 	m_gameObjects.push_back(player);
 	m_gameObjects.push_back(enemy);
 	m_gameObjects.push_back(enemy2);
+	m_gameObjects.push_back(enemy3);
+	m_gameObjects.push_back(enemy4);
+	m_gameObjects.push_back(enemy5);
+	m_gameObjects.push_back(enemy6);
+	m_gameObjects.push_back(enemy8);
+	m_gameObjects.push_back(enemy9);
+	m_gameObjects.push_back(enemy10);
+	m_gameObjects.push_back(enemy11);
+	m_gameObjects.push_back(UI);
 	std::cout << "entering PlayState\n";
 	return true;
 }
@@ -62,7 +114,9 @@ bool PlayState::onExit()
 	}
 	m_gameObjects.clear();
 
-	TheTextureManager::Instance()->clearFromTextureMap("helicopter");
+	TheTextureManager::Instance()->clearFromTextureMap("Player");
+	TheTextureManager::Instance()->clearFromTextureMap("Enemy");
+	TheTextureManager::Instance()->clearFromTextureMap("Timer");
 	std::cout << "exiting PlayState\n";
 	return true;
 }

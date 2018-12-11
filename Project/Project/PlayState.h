@@ -19,8 +19,10 @@ public:
 		return s_pInstance;
 	}
 private:
+	int b;
+	int start;
+	int a;
 	static const std::string s_playID;
-	SDL_Renderer *renderer;
 	static PlayState* s_pInstance;
 	std::vector<GameObject*> m_gameObjects;
 };

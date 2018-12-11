@@ -18,6 +18,7 @@ bool Game::init(std::string title, int xpos, int ypos, int width, int height, bo
 		return false;
 	}
 
+
 }
 void Game::handleEvents()
 {
@@ -47,5 +48,6 @@ void Game::clean() {
 
 void Game::Quit() {
 	m_bRunning = false;
+	TTF_Quit();
 }
 

@@ -18,8 +18,8 @@ void GameStateMachine::changeState(GameState *pState)
 	if (pState != NULL)
 	{
 		if (m_currentState != NULL) {
-			m_prevState = m_currentState;
 			m_currentState->onExit();
+			m_prevState = m_currentState;
 		}
 		m_currentState = pState;
 		m_currentState->onEnter();

@@ -23,26 +23,17 @@ void Player::handleInput()
 {
 	Vector2D* target = TheInputHandler::Instance()->getMousePosition();
 	m_velocity = *target - m_position;
-	m_velocity /= 100;
-	//if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT))
-	//{
-	//	m_velocity.setX(2);
-	//}
-	//if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT))
-	//{
-	//	m_velocity.setX(-2);
-	//}
-	//if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP))
-	//{
-	//	m_velocity.setY(-2);
-	//}
-	//if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
-	//{
-	//	m_velocity.setY(2);
-	//}
-	//if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_1)) {
-	//	TheGame::Instance()->clean();
-	//}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+	m_velocity /= 30;
+	if (m_position.getY() <= 40) {
+		m_velocity.setY(1);
+	}
+	else if (m_position.getY() >= 480) {
+		m_velocity.setY(-1);
+	}
+	if (m_position.getX() <= 0) {
+		m_velocity.setX(1);
+	}
+	else if (m_position.getX() >= 600) {
+		m_velocity.setX(-1);
 	}
 }
