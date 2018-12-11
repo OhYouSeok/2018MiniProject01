@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "MenuState.h"
 #include "MenuButton.h"
+#include "AnimatedGraphic.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
 PauseState * PauseState::s_pInstance = 0;
@@ -36,18 +37,26 @@ void PauseState::render()
 
 bool PauseState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/resume.png",
+	if (!TheTextureManager::Instance()->load("assets/RESUME.png",
 		"resumebutton", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/main.png",
+	if (!TheTextureManager::Instance()->load("assets/MENU.png",
 		"mainbutton", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/PauseBG.png",
+		"PauseBG", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	GameObject* gamePause = new AnimatedGraphic(
+		new  LoaderParams(0, 0, 640, 520, "PauseBG"), 2);
 	GameObject* button1 = new MenuButton(new
-		LoaderParams(200, 100, 200, 80, "mainbutton"), s_pauseToMain);
+		LoaderParams(240, 380, 145, 50, "mainbutton"), s_pauseToMain);
 	GameObject* button2 = new MenuButton(new
-		LoaderParams(200, 300, 200, 80, "resumebutton"), s_resumePlay);
+		LoaderParams(240, 300, 145, 50, "resumebutton"), s_resumePlay);
+	m_gameObjects.push_back(gamePause);
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	std::cout << "entering PauseState\n";

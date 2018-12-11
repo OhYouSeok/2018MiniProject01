@@ -54,9 +54,9 @@ bool TextureManager::load(std::string fileName, std::string ID, SDL_Renderer * r
 		return false;
 	}
 }
-bool TextureManager::loadTTF(std::string fileName, std::string ID, std::string talk, SDL_Renderer * renderer) {
+bool TextureManager::loadTTF(std::string fileName, std::string ID, std::string talk, SDL_Renderer * renderer,int R,int G,int B) {
 	TTF_Font * font = TTF_OpenFont(fileName.c_str(), 25);
-	SDL_Color color = { 100, 100, 100 };
+	SDL_Color color = { R, G, B };
 	SDL_Surface * surface = TTF_RenderText_Solid(font, talk.c_str(), color);
 	SDL_Texture * pTexture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);

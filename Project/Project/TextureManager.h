@@ -17,7 +17,7 @@ public:
 		}
 		return pInstance;
 	}
-	bool loadTTF(std::string fileName, std::string ID,std::string talk, SDL_Renderer * renderer);
+	bool loadTTF(std::string fileName, std::string ID,std::string talk, SDL_Renderer * renderer,int R,int G,int B);
 	void drawTTF(std::string ID, int x, int y, int width, int height, SDL_Renderer * renderer);
 	void clearFromTextureMap(std::string id);
 private:

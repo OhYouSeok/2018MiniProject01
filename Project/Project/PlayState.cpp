@@ -28,7 +28,7 @@ void PlayState::update()
 				new GameOverState());
 		}
 	}
-	a = 60;
+	a = 10;
 	b = a - ((SDL_GetTicks() - start) / 1000);
 	if (b <= 0) {
 		TheGame::Instance()->getStateMachine()->pushState(new GameClearState());
@@ -38,7 +38,7 @@ void PlayState::update()
 void PlayState::render()
 {
 	std::string leftTime = std::to_string(b);
-	if (!TheTextureManager::Instance()->loadTTF("assets/a.ttf", "Timer", leftTime, TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance()->loadTTF("assets/a.ttf", "Timer", leftTime, TheGame::Instance()->getRenderer(),255,122,165))
 	{
 	}
 	;	for (int i = 0; i < m_gameObjects.size(); i++)
@@ -49,6 +49,7 @@ void PlayState::render()
 }
 bool PlayState::onEnter()
 {
+	SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 0, 0, 0, 255);
 	start = SDL_GetTicks();
 	if (!TheTextureManager::Instance()->load("assets/Player.png",
 		"Player", TheGame::Instance()->getRenderer())) {
@@ -66,29 +67,29 @@ bool PlayState::onEnter()
 		std::cout, "TTF_Init";
 	}
 	GameObject* player = new Player(
-		new LoaderParams(320, 240, 32, 32, "Player"));
+		new LoaderParams(320, 240, 28, 26, "Player"));
 	GameObject* enemy = new Enemy(
-		new LoaderParams(50, 50, 32, 32, "Enemy"));
+		new LoaderParams(50, 50, 19,19, "Enemy"));
 	GameObject* enemy2 = new Enemy(
-		new LoaderParams(250, 50, 32, 32, "Enemy"));
+		new LoaderParams(250, 50, 19, 19, "Enemy"));
 	GameObject* enemy3 = new Enemy(
-		new LoaderParams(450, 50, 32, 32, "Enemy"));
+		new LoaderParams(450, 50, 19, 19, "Enemy"));
 	GameObject* enemy4 = new Enemy(
-		new LoaderParams(50, 50, 32, 32, "Enemy"));
+		new LoaderParams(50, 50, 19, 19, "Enemy"));
 	GameObject* enemy5 = new Enemy(
-		new LoaderParams(50, 250, 32, 32, "Enemy"));
+		new LoaderParams(50, 250, 19, 19, "Enemy"));
 	GameObject* enemy6 = new Enemy(
-		new LoaderParams(50, 450, 32, 32, "Enemy"));
+		new LoaderParams(50, 450, 19, 19, "Enemy"));
 	GameObject* enemy7 = new Enemy(
-		new LoaderParams(450, 50, 32, 32, "Enemy"));
+		new LoaderParams(450, 50, 19, 19, "Enemy"));
 	GameObject* enemy8 = new Enemy(
-		new LoaderParams(450, 250, 32, 32, "Enemy"));
+		new LoaderParams(450, 250, 19, 19, "Enemy"));
 	GameObject* enemy9 = new Enemy(
-		new LoaderParams(450, 450, 32, 32, "Enemy"));
+		new LoaderParams(450, 450, 19, 19, "Enemy"));
 	GameObject* enemy10 = new Enemy(
-		new LoaderParams(150, 450, 32, 32, "Enemy"));
+		new LoaderParams(150, 450, 19, 19, "Enemy"));
 	GameObject* enemy11 = new Enemy(
-		new LoaderParams(350, 450, 32, 32, "Enemy"));
+		new LoaderParams(350, 450, 19, 19, "Enemy"));
 	GameObject* UI = new AnimatedGraphic(
 		new LoaderParams(0, 0, 640, 40, "UI"),2);
 	m_gameObjects.push_back(player);

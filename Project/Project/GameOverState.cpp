@@ -21,33 +21,31 @@ void GameOverState::s_restartPlay()
 
 bool GameOverState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/gameover.png",
-		"gameovertext", TheGame::Instance()->getRenderer()))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/main.png",
+	if (!TheTextureManager::Instance()->load("assets/Menu.png",
 		"mainbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/restart.png",
+	if (!TheTextureManager::Instance()->load("assets/Retry.png",
 		"restartbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	GameObject* gameOverText = new AnimatedGraphic(
-		new  LoaderParams(200, 100, 190, 30, "gameovertext"), 2);
+	if (!TheTextureManager::Instance()->load("assets/OverBG.png",
+		"OverBG", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	GameObject* gameOver = new AnimatedGraphic(
+		new  LoaderParams(0, 0,640, 520, "OverBG"), 2);
 
 	GameObject* button1 = new MenuButton(
-		new LoaderParams(200, 200, 200, 80, "mainbutton"),
+		new LoaderParams(240, 380, 145,50, "mainbutton"),
 		s_gameOverToMain);
-
 	GameObject* button2 = new MenuButton(
-		new LoaderParams(200, 300, 200, 80, "restartbutton"),
+		new LoaderParams(240, 300, 145, 50, "restartbutton"),
 		s_restartPlay);
-
-	m_gameObjects.push_back(gameOverText);
+	m_gameObjects.push_back(gameOver);
 	m_gameObjects.push_back(button1);
 	m_gameObjects.push_back(button2);
 	std::cout << "entering PauseState\n";

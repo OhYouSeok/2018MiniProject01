@@ -16,24 +16,24 @@ void GameClearState::s_gameClearToMain()
 
 bool GameClearState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/gameover.png",
-		"gameovertext", TheGame::Instance()->getRenderer()))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/main.png",
+	if (!TheTextureManager::Instance()->load("assets/MENU.png",
 		"mainbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	GameObject* gameClearText = new AnimatedGraphic(
-		new  LoaderParams(200, 100, 190, 30, "gameovertext"), 2);
+	if (!TheTextureManager::Instance()->load("assets/ClearBG.png",
+		"ClearBG", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	GameObject* gameClear = new AnimatedGraphic(
+		new  LoaderParams(0, 0, 640, 520, "ClearBG"), 2);
 
 	GameObject* button1 = new MenuButton(
-		new LoaderParams(200, 200, 200, 80, "mainbutton"),
+		new LoaderParams(240, 320, 145, 50, "mainbutton"),
 		s_gameClearToMain);
 
-	m_gameObjects.push_back(gameClearText);
+	m_gameObjects.push_back(gameClear);
 	m_gameObjects.push_back(button1);
 	std::cout << "entering PauseState\n";
 	return true;
