@@ -4,6 +4,8 @@
 #include "MenuButton.h"
 #include "PlayState.h"
 #include "AnimatedGraphic.h"
+
+
 const std::string MenuState::s_menuID = "MENU";
 MenuState * MenuState::s_pInstance = 0;
 
@@ -78,6 +80,8 @@ bool MenuState::onExit()
 		->clearFromTextureMap("playbutton");
 	TheTextureManager::Instance()
 		->clearFromTextureMap("exitbutton");
+	TheTextureManager::Instance()
+		->clearFromTextureMap("MainBG");
 	std::cout << "exiting MenuState\n";
 	return true;
 }

@@ -10,7 +10,7 @@ public:
 	virtual void render();
 	virtual bool onEnter();
 	virtual bool onExit();
-	void handleEvents();
+
 	virtual std::string getStateID() const { return s_playID; }
 	static PlayState * Instance() {
 		if (s_pInstance == 0) {
@@ -18,10 +18,10 @@ public:
 		}
 		return s_pInstance;
 	}
+	int start;
 private:
 	int b;
-	int start;
-	int a;
+	int a = 60;
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
 	std::vector<GameObject*> m_gameObjects;

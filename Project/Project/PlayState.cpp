@@ -4,7 +4,7 @@
 #include "GameOverState.h"
 #include "GameClearState.h"
 #include "AnimatedGraphic.h"
-#include <SDL_ttf.h>
+
 
 const std::string PlayState::s_playID = "PLAY";
 PlayState * PlayState::s_pInstance = 0;
@@ -28,7 +28,6 @@ void PlayState::update()
 				new GameOverState());
 		}
 	}
-	a = 10;
 	b = a - ((SDL_GetTicks() - start) / 1000);
 	if (b <= 0) {
 		TheGame::Instance()->getStateMachine()->pushState(new GameClearState());
@@ -49,8 +48,8 @@ void PlayState::render()
 }
 bool PlayState::onEnter()
 {
-	SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 0, 0, 0, 255);
 	start = SDL_GetTicks();
+	SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 0, 0, 0, 255);
 	if (!TheTextureManager::Instance()->load("assets/Player.png",
 		"Player", TheGame::Instance()->getRenderer())) {
 		return false;
@@ -118,6 +117,7 @@ bool PlayState::onExit()
 	TheTextureManager::Instance()->clearFromTextureMap("Player");
 	TheTextureManager::Instance()->clearFromTextureMap("Enemy");
 	TheTextureManager::Instance()->clearFromTextureMap("Timer");
+	TheTextureManager::Instance()->clearFromTextureMap("UI");
 	std::cout << "exiting PlayState\n";
 	return true;
 }

@@ -31,7 +31,6 @@ void SDLGameObject::draw()
 }
 
 SDL_Rect SDLGameObject::getRect() 
-
 {
 	SDL_Rect rect;
 	rect.x = (int)m_position.getX();

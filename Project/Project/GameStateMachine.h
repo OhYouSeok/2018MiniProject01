@@ -8,6 +8,7 @@ public:
 	void popState();
 	void update();
 	void render();
+	void musicChanger();
 protected:
 	std::vector<GameState*>m_gameStates;
 private:

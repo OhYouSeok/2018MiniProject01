@@ -71,7 +71,7 @@ bool GameOverState::onExit() {
 	}
 	m_gameObjects.clear();
 	TheTextureManager::Instance()
-		->clearFromTextureMap("gameovertext");
+		->clearFromTextureMap("OverBG");
 	TheTextureManager::Instance()
 		->clearFromTextureMap("mainbutton");
 	TheTextureManager::Instance()

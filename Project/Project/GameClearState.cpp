@@ -4,8 +4,9 @@
 #include "MenuButton.h"
 #include "AnimatedGraphic.h"
 #include "PlayState.h"
+#include <SDL_mixer.h>
 
-const std::string GameClearState::s_gameClearID = "GAMECEALR";
+const std::string GameClearState::s_gameClearID = "GAMECLEAR";
 
 
 void GameClearState::s_gameClearToMain()
@@ -16,6 +17,7 @@ void GameClearState::s_gameClearToMain()
 
 bool GameClearState::onEnter()
 {
+	Mix_CloseAudio();
 	if (!TheTextureManager::Instance()->load("assets/MENU.png",
 		"mainbutton", TheGame::Instance()->getRenderer()))
 	{
@@ -35,7 +37,7 @@ bool GameClearState::onEnter()
 
 	m_gameObjects.push_back(gameClear);
 	m_gameObjects.push_back(button1);
-	std::cout << "entering PauseState\n";
+	std::cout << "entering ClearState\n";
 	return true;
 }
 
@@ -58,9 +60,10 @@ bool GameClearState::onExit() {
 	}
 	m_gameObjects.clear();
 	TheTextureManager::Instance()
-		->clearFromTextureMap("gameovertext");
+		->clearFromTextureMap("ClearBG");
 	TheTextureManager::Instance()
 		->clearFromTextureMap("mainbutton");
-	std::cout << "exiting GameOverState\n";
+	std::cout << "exiting GameClearState\n";
+	Mix_CloseAudio();
 	return true;
 }

@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "MenuState.h"
 #include "PlayState.h"
+
 Game * Game::s_pInstance = 0;
 Game::Game() {};
 bool Game::init(std::string title, int xpos, int ypos, int width, int height, bool fullscreen) {
@@ -44,10 +45,13 @@ void Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	TheInputHandler::Instance()->clean();
+	Mix_CloseAudio();
+	TTF_Quit();
 }
 
 void Game::Quit() {
 	m_bRunning = false;
 	TTF_Quit();
+	Mix_CloseAudio();
 }
 
