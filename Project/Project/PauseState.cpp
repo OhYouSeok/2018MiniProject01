@@ -10,12 +10,17 @@ PauseState * PauseState::s_pInstance = 0;
 
 void PauseState::s_pauseToMain()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	TheGame::Instance()->getStateMachine()->changeState(
 		new MenuState());
 }
 
 void PauseState::s_resumePlay()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
+	Mix_ResumeMusic();
 	TheGame::Instance()->getStateMachine()->popState();
 }
 

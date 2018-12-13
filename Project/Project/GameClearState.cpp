@@ -11,6 +11,8 @@ const std::string GameClearState::s_gameClearID = "GAMECLEAR";
 
 void GameClearState::s_gameClearToMain()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	TheGame::Instance()->getStateMachine()->changeState(
 		new MenuState());
 }

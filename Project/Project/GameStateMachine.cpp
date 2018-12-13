@@ -43,7 +43,6 @@ void GameStateMachine::render()
 
 void GameStateMachine::musicChanger() {
 	if (m_currentState->getStateID() == "PLAY") {
-			Mix_ResumeMusic();
 			Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 			Mix_Music *music = Mix_LoadMUS("assets/GameBGM.mp3");
 			Mix_PlayMusic(music, -1);
@@ -62,5 +61,9 @@ void GameStateMachine::musicChanger() {
 		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 		Mix_Music *music = Mix_LoadMUS("assets/GameoverBGM.mp3");
 		Mix_PlayMusic(music, -1);
+	}
+	else if (m_currentState->getStateID() == "PAUSE") {
+		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+		Mix_PauseMusic();
 	}
 }

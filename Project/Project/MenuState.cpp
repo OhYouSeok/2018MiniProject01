@@ -26,6 +26,8 @@ void MenuState::render()
 }
 void MenuState::s_menuToPlay()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	std::cout << "Play button clicked\n";
 	TheGame::Instance()->getStateMachine()->changeState(
 		new PlayState());
@@ -34,6 +36,8 @@ void MenuState::s_menuToPlay()
 
 void MenuState::s_exitFromMenu()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	std::cout << "Exit button clicked\n";
 	TheGame::Instance()->Quit();
 }

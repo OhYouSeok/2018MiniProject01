@@ -10,11 +10,15 @@ const std::string GameOverState::s_gameOverID = "GAMEOVER";
 
 void GameOverState::s_gameOverToMain()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	TheGame::Instance()->getStateMachine()->changeState(
 		new MenuState());
 }
 void GameOverState::s_restartPlay()
 {
+	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
+	Mix_PlayChannel(-1, ButtonS, 0);
 	TheGame::Instance()->getStateMachine()->changeState(
 		new PlayState());
 }

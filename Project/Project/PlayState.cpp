@@ -5,7 +5,6 @@
 #include "GameClearState.h"
 #include "AnimatedGraphic.h"
 
-
 const std::string PlayState::s_playID = "PLAY";
 PlayState * PlayState::s_pInstance = 0;
 
@@ -19,9 +18,9 @@ void PlayState::update()
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
-	for (int x = 1; x <= 10; x++) {
+	for (int x = 2; x <= 11; x++) {
 		if (checkCollision(
-			dynamic_cast<SDLGameObject*>(m_gameObjects[0]),
+			dynamic_cast<SDLGameObject*>(m_gameObjects[1]),
 			dynamic_cast<SDLGameObject*>(m_gameObjects[x])))
 		{
 			TheGame::Instance()->getStateMachine()->pushState(
@@ -62,9 +61,15 @@ bool PlayState::onEnter()
 		"UI", TheGame::Instance()->getRenderer())) {
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/GameBG.png",
+		"GameBG", TheGame::Instance()->getRenderer())) {
+		return false;
+	}
 	if (TTF_Init() != 0) {
 		std::cout, "TTF_Init";
 	}
+	GameObject* GameBG = new AnimatedGraphic(
+		new LoaderParams(0, 0, 640,520 , "GameBG"),2);
 	GameObject* player = new Player(
 		new LoaderParams(320, 240, 28, 26, "Player"));
 	GameObject* enemy = new Enemy(
@@ -91,6 +96,7 @@ bool PlayState::onEnter()
 		new LoaderParams(350, 450, 19, 19, "Enemy"));
 	GameObject* UI = new AnimatedGraphic(
 		new LoaderParams(0, 0, 640, 40, "UI"),2);
+	m_gameObjects.push_back(GameBG);
 	m_gameObjects.push_back(player);
 	m_gameObjects.push_back(enemy);
 	m_gameObjects.push_back(enemy2);

@@ -1,4 +1,5 @@
 #include "MenuButton.h"
+#include <SDL_mixer.h>
 
 void MenuButton::draw() {
 	SDLGameObject::draw();
