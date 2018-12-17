@@ -1,15 +1,15 @@
-﻿#include "MenuState.h"
+#include "Prologue.h"
 #include "Player.h"
 #include "Game.h"
 #include "MenuButton.h"
+#include "PlayState.h"
 #include "AnimatedGraphic.h"
-#include "Prologue.h"
+#include "Enemy.h"
 
+const std::string Prologue::s_prologueID = "PROLOGUE";
+Prologue * Prologue::s_pInstance = 0;
 
-const std::string MenuState::s_menuID = "MENU";
-MenuState * MenuState::s_pInstance = 0;
-
-void MenuState::update()
+void Prologue::update()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -17,31 +17,25 @@ void MenuState::update()
 	}
 }
 
-void MenuState::render()
+void Prologue::render()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
 	}
 }
-void MenuState::s_menuToPrologue()
+void Prologue::s_menuToHardPlay()
 {
 	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
 	Mix_PlayChannel(-1, ButtonS, 0);
 	std::cout << "Play button clicked\n";
 	TheGame::Instance()->getStateMachine()->changeState(
-		new Prologue());
+		new PlayState());
 
 }
 
-void MenuState::s_exitFromMenu()
-{
-	Mix_Chunk * ButtonS = Mix_LoadWAV("assets/selection.wav");
-	Mix_PlayChannel(-1, ButtonS, 0);
-	std::cout << "Exit button clicked\n";
-	TheGame::Instance()->Quit();
-}
-bool MenuState::onEnter()
+
+bool Prologue::onEnter()
 {
 	if (!TheTextureManager::Instance()->load("assets/Start.png",
 		"playbutton", TheGame::Instance()->getRenderer()))
@@ -53,27 +47,23 @@ bool MenuState::onEnter()
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/MainBG.png",
-		"MainBG", TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance()->load("assets/PrologueBG.png",
+		"PrologueBG", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	GameObject* MainBG = new AnimatedGraphic(new LoaderParams(0, 0, 640, 520,"MainBG"), 2);
+	GameObject* MainBG = new AnimatedGraphic(new LoaderParams(0, 0, 640, 520, "PrologueBG"), 2);
 	GameObject* button1 = new MenuButton(
-		new LoaderParams(240, 270,145 , 50, "playbutton"),
-		s_menuToPrologue);
+		new LoaderParams(260, 370, 145, 50, "playbutton"),
+		s_menuToHardPlay);
 
-	GameObject* button2 = new MenuButton(
-		new LoaderParams(240, 350, 145, 50, "exitbutton"),
-		s_exitFromMenu);
 	m_gameObjects.push_back(MainBG);
 	m_gameObjects.push_back(button1);
-	m_gameObjects.push_back(button2);
-	std::cout << "entering MenuState\n";
+	std::cout << "entering PrologueState\n";
 	return true;
 }
 
-bool MenuState::onExit()
+bool Prologue::onExit()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -85,7 +75,7 @@ bool MenuState::onExit()
 	TheTextureManager::Instance()
 		->clearFromTextureMap("exitbutton");
 	TheTextureManager::Instance()
-		->clearFromTextureMap("MainBG");
+		->clearFromTextureMap("PrologueBG");
 	std::cout << "exiting MenuState\n";
 	return true;
 }
